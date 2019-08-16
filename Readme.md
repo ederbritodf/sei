@@ -1,3 +1,10 @@
+# Instalação SEI - WEBSERVER 
+
+- Centos7 
+- Apache
+- Memcached
+- PHP56
+
 # Upstream SEI NGINX
 
     upstream homolog-sei.com.br {
