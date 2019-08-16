@@ -8,8 +8,8 @@
 
 PHP=/etc/php.ini
 CONFIGMEMCACHED=/etc/sysconfig/memcached
-
-
+SELINUX=/etc/sysconfig/selinux
+DIR=/opt
 
 #INSTALL APACHE
 
@@ -30,7 +30,7 @@ APACHE(){
 	
         # ---- Verifica instalacao httpd ---- #
 
-	rpm -qa | grep httpd
+	rpm -qa httpd
         
 		if [ $? -eq 0 ] 
 	 	then
@@ -58,7 +58,7 @@ MEMCACHED(){
 
         # ---- Verifica instalacao httpd ---- #
 
-        rpm -qa | grep memcache
+        rpm -qa memcached
 
 	        if [ $? -eq 0 ]
 	         then
@@ -112,7 +112,7 @@ PHP56(){
 	#Arquivo PHP.INI
 	echo "Arquivo de configuração php.ini"
 	php -i | grep "Loaded"
-	}
+      }
 
 PHPINI(){
 	#Verificar os itens abaixo no arquivo php.ini dos servidores que rodam o SEI/SIP
@@ -122,12 +122,61 @@ PHPINI(){
 	echo "## CUSTOMIZACOES SEI ##" >> $PHP
 	echo "########################" >> $PHP
 	echo include_path = "/opt/infra/infra_php" >> $PHP
+	echo max_input_vars = 200 >> $PHP
+	echo magic-quotes-gpc = 0 >> $PHP
+	echo magic_quotes_runtime = 0 >> $PHP
+	echo magic_quotes_sysbase = 0 >> $PHP
 	sed -i "s/UTF-8/ISO-8859-1/g" $PHP
 	sed -i "s/1440/2880/g" $PHP
+	sed -i "663s/8M/40M/g" $PHP
+	sed -i "811s/2M/20M/g" $PHP
+      }
 
-	}
+SELINUX(){
+
+        echo "--------------------"
+        echo "DESABILITA SELINUX"
+	sed -i "s/enforcing/disabled/g" $SELINUX
+	setenforce 0
+	getenforce
+      }
+
+GIT(){
+
+	 echo "--------------------"
+	 echo "INSTALA GIT"
+	 yum install git -y
+
+
+     }
+
+
+SEI(){
+
+        echo "--------------------"
+        echo "CONFIGURA APLICAÇÃO SEI"
+	echo "DOWNLOAD SEI GITHUB - EDERBRITODF"
+	echo "--------------------"
+	echo " VERIFICA GIT "
+	rpm -qa git
+
+                if [ $? -eq 0 ]
+                then
+                  echo " ++ GIT instalado ++"
+                else
+		  GIT
+                fi
+       echo "DOWNLOAD VERSÃO 3.0" 
+       wget https://github.com/ederbritodf/sei/blob/master/SEI-Fontes-v3.0.0.tar.gz
+       echo "DESCOMPACTA SEI"
+	tar -zxvf SEI-Fontes-v3.0.0.tar.gz -C /opt/
+	
+     }
 
 
 #APACHE
 #MEMCACHED
 #PHP56
+PHPINI
+SELINUX
+SEI
