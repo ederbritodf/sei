@@ -7,6 +7,8 @@
 
 # Script Shell - INSTALAÇÃO WEBSERVER
 
+- [Script de instalação SEI](https://github.com/ederbritodf/sei/blob/master/sei-httpd.sh)
+
     #!/bin/bash
 
     #################################################################
