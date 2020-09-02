@@ -1,17 +1,27 @@
-# Instalação SEI - WEBSERVER 
+<h1 align="center"> SEI - Sistema Eletrônico de Informação 🐧 </h1>
+
+- Repositório com shell script de instalação do sistema SEI (Em construção)
+
+#### 👤 Por: **Eder Queiroz**
+ - 🐱 Github: [@ederqueirozdf](https://github.com/ederqueirozdf)
+ - 🤙 Telegram: [@ederqueirozdf](https://t.me/ederqueirozdf)
+ - Linux ❤️
+<hr>
+
+### Instalação SEI - WEBSERVER 
 
 - Centos7 
 - Apache
 - Memcached
 - PHP56
 
-# Script Shell - INSTALAÇÃO WEBSERVER
+### Script Shell - INSTALAÇÃO WEBSERVER
 
 - [SHELLSCRIPT - INSTALAÇÃO SEI](https://github.com/ederbritodf/sei/blob/master/sei-httpd.sh)
 
 
 
-# Upstream SEI NGINX
+### Upstream SEI NGINX
 
     upstream homolog-sei.com.br {
             ip_hash;
